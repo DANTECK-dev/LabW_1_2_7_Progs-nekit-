@@ -1,4 +1,4 @@
-#include "Class.h"
+#include "class.h"
 
 int main()
 {
@@ -14,10 +14,10 @@ int main()
 	}
 	Schoolboy* head = NULL;
 	head = new Schoolboy("Мисюркеев Никита Вячеславович", "3В", "18005553535", "5 4 3", 31, "Капитан", 34123, 1, "ВСГУТУ", "ПИ", "Б661-2");
-	Schoolboy* childs = head;
+	Schoolboy* current = head;
 	Schoolboy* tail = NULL;
 	tail = new Schoolboy;
-	childs->Preperation(*&head, *&tail, *&childs);
+	current->Preperation(*&head, *&tail, *&current);
 #if VER == 1
 	cout << "\nУ ВАС ДЕМО ВЕРСИЯ (7 и 8 пункты меню недоступны)\n";
 #else
@@ -37,7 +37,7 @@ int main()
 		cout << "\nВведите номер действия: ";
 		int action;
 		cin >> action;
-		childs = head;
+		current = head;
 		switch (action) {
 		case(0):
 		{
@@ -47,9 +47,16 @@ int main()
 		}
 		case(1):
 		{
+			if (current == NULL && head == NULL && tail == NULL)
+				head = tail = current = new Schoolboy;
 			try
 			{
-				childs->CreateBoy(*&tail, *&childs);
+				if (listNum == 1)
+					current->schoolKid.Create(*&tail, *&current);
+				else if (listNum == 2)
+					current->cadet.Create(*&tail, *&current);
+				else if (listNum == 3)
+					current->student.Create(*&tail, *&current);
 			}
 			catch (const exception& err)
 			{
@@ -61,7 +68,7 @@ int main()
 		{
 			try
 			{
-				childs->DeleteBoy(*&head, *&tail, *&childs);
+				current->schoolKid.Delete(*&head, *&tail, *&current);
 			}
 			catch (const exception& err)
 			{
@@ -73,7 +80,13 @@ int main()
 		{
 			try
 			{
-				childs->ChangeBoy(*&childs);
+				if (listNum == 1)
+					current->schoolKid.Change(*&current);
+				else if (listNum == 2)
+					current->cadet.Change(*&current);
+				else if (listNum == 3)
+					current->student.Change(*&current);
+				break;
 			}
 			catch (const exception& err)
 			{
@@ -83,17 +96,32 @@ int main()
 		}
 		case(4):
 		{
-			childs->OutBoy(*&head, *&childs);
+			if (listNum == 1)
+				current->schoolKid.Output(*&head, *&current);
+			else if (listNum == 2)
+				current->cadet.Output(*&head, *&current);
+			else if (listNum == 3)
+				current->student.Output(*&head, *&current);
 			break;
 		}
 		case(5):
 		{
-			childs->SortBoy(*&head, *&tail, *&childs);
+			if (listNum == 1)
+				current->schoolKid.Sort(*&head, *&tail, *&current);
+			else if (listNum == 2)
+				current->cadet.Sort(*&head, *&tail, *&current);
+			else if (listNum == 3)
+				current->student.Sort(*&head, *&tail, *&current);
 			break;
 		}
 		case(6):
 		{
-			childs->SearchBoys(*&head, *&childs);
+			if (listNum == 1)
+				current->schoolKid.Search(*&head, *&current);
+			else if (listNum == 2)
+				current->cadet.Search(*&head, *&current);
+			else if (listNum == 3)
+				current->student.Search(*&head, *&current);
 			break;
 		}
 		case(7):
@@ -112,7 +140,7 @@ int main()
 		{
 			try
 			{
-				LoadFile(*&tail, *&childs);
+				LoadFile(*&tail, *&current);
 			}
 			catch (const exception& err)
 			{
@@ -126,6 +154,5 @@ int main()
 			break;
 		}
 		}
-		childs->AfterPreparation(*&head, *&tail, *&childs);
 	}
 }
