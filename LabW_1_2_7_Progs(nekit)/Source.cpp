@@ -96,6 +96,10 @@ int main()
 		}
 		case(4):
 		{
+			if (current == NULL && head == NULL && tail == NULL) {
+				cout << "\nВыводить нечего\n";
+				break;
+			}
 			if (listNum == 1)
 				current->schoolKid.Output(*&head, *&current);
 			else if (listNum == 2)
