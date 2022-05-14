@@ -101,9 +101,7 @@ public:
 			}
 			current = tail;
 			current->next = new Schoolboy;
-			current->next->prev = current;
 			current = current->next;
-			tail = current;
 
 			current->schoolKid.SetFio(s1);
 			current->schoolKid.SetClase(s2);
@@ -125,7 +123,7 @@ public:
 			current = head;
 			lineNum--;
 			bool isCurrent = true;
-			for (int i = 0; i < lineNum; i++)
+			for (int i = 0; i < lineNum - 1; i++)
 			{
 				current = current->next;
 				if (!current)
@@ -149,7 +147,7 @@ public:
 						current->prev->next = current->next;
 						current->next->prev = current->prev;
 					}
-					else if (current == head && current != tail)
+					if (current == head && current != tail)
 					{
 						head = current->next;
 						head->prev = NULL;
@@ -159,16 +157,11 @@ public:
 						tail = current->prev;
 						tail->next = NULL;
 					}
-					else if (current == tail && current == head)
+					else
 					{
 						head = NULL;
 						tail = NULL;
-						current = NULL;
-						cout << "\nУдалена последняя запись, больше удалять нечего\n";
-						return;
 					}
-					delete current;
-					current = head;
 					cout << "\nЗапись успешно удалена\n";
 					break;
 				}
@@ -352,6 +345,13 @@ public:
 			int counter = 1;
 			Schoolboy* temp = NULL;
 			temp = new Schoolboy;
+			while (true)
+			{
+				counter++;
+				current = current->next;
+				if (current == tail)
+					break;
+			}
 			current = head;
 
 			for (int i = 1; i < counter; i++)
@@ -523,9 +523,7 @@ public:
 
 			current = tail;
 			current->next = new Schoolboy;
-			current->next->prev = current;
 			current = current->next;
-			tail = current;
 
 			current->schoolKid.SetFio(s1);
 			current->schoolKid.SetClase(s2);
@@ -705,6 +703,13 @@ public:
 			int counter = 1;
 			Schoolboy* temp = NULL;
 			temp = new Schoolboy;
+			while (true)
+			{
+				counter++;
+				current = current->next;
+				if (current == tail)
+					break;
+			}
 			current = head;
 
 			for (int i = 1; i < counter; i++)
@@ -906,9 +911,7 @@ public:
 
 			current = tail;
 			current->next = new Schoolboy;
-			current->next->prev = current;
 			current = current->next;
-			tail = current;
 
 			current->schoolKid.SetFio(s1);
 			current->schoolKid.SetNumber(s3);
@@ -1100,6 +1103,13 @@ public:
 			int counter = 1;
 			Schoolboy* temp = NULL;
 			temp = new Schoolboy;
+			while (true)
+			{
+				counter++;
+				current = current->next;
+				if (current == tail)
+					break;
+			}
 			current = head;
 
 			for (int i = 1; i < counter; i++)
@@ -1249,6 +1259,14 @@ public:
 
 	void Preperation(Schoolboy*& head, Schoolboy*& tail, Schoolboy*& current)
 	{
+		while (true)
+		{
+			if (current->next == NULL)
+				break;
+			current = current->next;
+			tail = current;
+
+		}
 		current = head;
 		string Fios[4] = { "Агафонова Мария Викторовна", "Орлова Вероника Генадьевна", "Золотарёва Полина Доржиевна", "Раскольников Егор Петрович" };
 		string Clase[4] = { "2А", "8Г", "4В", "2А" };
@@ -1266,9 +1284,40 @@ public:
 			current->next = new Schoolboy(Fios[i], Clase[i], Numbers[i], Gradess[i],
 				schoolNums[i], Ranks[i], Ids[i], Courses[i],
 				nameUnivs[i], Specs[i], GroupNums[i]);
-			current->next->prev = current;
+			current = current->next;
+		}
+
+		current = head;
+		while (true) {
+			if (current->next == NULL)
+				break;
 			current = current->next;
 			tail = current;
+		}
+		while (true) {
+			if (current->prev == NULL)
+				break;
+			current = current->prev;
+			head = current;
+		}
+	}
+
+	void AfterPreparation(Schoolboy*& head, Schoolboy*& tail, Schoolboy*& current)
+	{
+		current = head;
+		while (true)
+		{
+			if (current->next == NULL)
+				break;
+			current = current->next;
+			tail = current;
+		}
+		while (true)
+		{
+			if (current->prev == NULL)
+				break;
+			current = current->prev;
+			head = current;
 		}
 	}
 };
