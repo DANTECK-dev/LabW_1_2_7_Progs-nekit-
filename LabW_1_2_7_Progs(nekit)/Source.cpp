@@ -1,4 +1,4 @@
-#include "Class.h"
+#include "class.h"
 
 int main()
 {
@@ -47,6 +47,8 @@ int main()
 		}
 		case(1):
 		{
+			if (current == NULL && head == NULL && tail == NULL)
+				head = tail = current = new Schoolboy;
 			try
 			{
 				if (listNum == 1)
@@ -152,6 +154,5 @@ int main()
 			break;
 		}
 		}
-		current->AfterPreparation(*&head, *&tail, *&current);
 	}
 }
